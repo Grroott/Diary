@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from .forms import NewContentForm, ContentEditForm, UserRegisterForm, FeedbackForm, MyLoginAuthForm
 from .models import Daily
 from django.contrib import messages
@@ -19,7 +20,10 @@ from django.contrib.auth.models import User
 @login_required()
 def home(request):
     if request.method == 'GET':
-        return render(request, 'daytoday/home.html')
+        context = {
+            'date': timezone.now().date().strftime('%Y-%m-%d')
+        }
+        return render(request, 'daytoday/home.html', context=context)
     elif request.method == 'POST':
         if request.POST.get('selected_date') != '':
             return redirect('view_specific_content', date=request.POST.get('selected_date'))
