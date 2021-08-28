@@ -68,6 +68,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SECURE_SSL_REDIRECT = True
+
 ROOT_URLCONF = 'Diary.urls'
 
 TEMPLATES = [
