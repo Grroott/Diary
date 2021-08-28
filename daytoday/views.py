@@ -136,7 +136,7 @@ def feedback(request):
 
 @login_required()
 def bookmark_date(request, date):
-    content = get_object_or_404(Daily, date=date)
+    content = get_object_or_404(Daily, date=date, user=request.user)
     if content:
         if content.bookmark:
             content.bookmark = False
