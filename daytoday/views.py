@@ -152,13 +152,10 @@ def bookmark_date(request, date):
 @login_required()
 def view_bookmarks(request):
     bookmarks = Daily.objects.filter(bookmark=True, user=request.user).order_by('-date')
-    if bookmarks:
-        context = {
-            'bookmarks': bookmarks
-        }
-        return render(request, 'daytoday/bookmarks.html', context=context)
-    else:
-        return HttpResponse("No bookmarks")
+    context = {
+        'bookmarks': bookmarks
+    }
+    return render(request, 'daytoday/bookmarks.html', context=context)
 
 
 class MyLoginView(LoginView):
