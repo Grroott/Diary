@@ -1,0 +1,16 @@
+{% extends "daytoday/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data" class="blog-section">
+	{% csrf_token %}
+	<fieldset class="form-group">
+		{{ edit_form.media }}
+		{{ edit_form | crispy }}
+	</fieldset>
+	<div class="form-group">
+		<button class="btn btn-outline-dark" type="submit">Edit Content</button>
+	</div>
+</form>
+
+{% endblock content %}

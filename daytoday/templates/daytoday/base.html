@@ -1,0 +1,100 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'daytoday/base.css' %}">
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Diary!</title>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <header class="blog-header">
+    	<nav class="navbar navbar-expand-md navbar-dark bg-custom fixed-top">
+    		<div class="container">
+				<a class="navbar-brand" href="{% url 'home' %}">Diary</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarToggle">
+		        <div class="navbar-nav mr-auto">
+		          <a class="nav-item nav-link " href="{% url 'home' %}">Home</a>
+
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link " href="{% url 'new_content' %}">New Day</a>
+                        <a class="nav-item nav-link " href="{% url 'view_bookmarks' %}">Bookmarks</a>
+                    {% endif %}
+
+		        </div>
+		        <!-- Navbar Right Side -->
+		        <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link " href="{% url 'feedback' %}">Feedback</a>
+                        <a class="nav-item nav-link " href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link " href="{% url 'login' %}">Login</a>
+                        <a class="nav-item nav-link " href="{% url 'register' %}">Register</a>
+                    {% endif %}
+		        </div>
+	      		</div>
+			</div>
+		</nav>
+    </header>
+
+    <div class="container">
+
+        <div class="row">
+          <div class="col-sm d-none d-sm-block">
+          </div>
+          <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+          </div>
+          <div class="col-sm-2">
+          </div>
+      </div>
+    </div>
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+		function viewPassword() {
+		  var x = document.getElementById("view-pwd");
+		  if (x.type === "password") {
+			x.type = "text";
+		  } else {
+			x.type = "password";
+		  }
+		  var x = document.getElementById("view-pwd1");
+		  if (x.type === "password") {
+			x.type = "text";
+		  } else {
+			x.type = "password";
+		  }
+		}
+	</script>
+  </body>
+
+
+</html>

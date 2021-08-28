@@ -1,0 +1,28 @@
+{% extends "daytoday/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="blog-section" style="margin-top: 20%">
+	<form method="POST">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			{{ form | crispy}}
+			<input type="checkbox" onclick="viewPassword()">Show Password
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-outline-dark" type="submit">Login</button>
+			<small class="text-muted ml-2">
+				<a href="{% url 'password_reset' %}">Forgot password?</a>
+			</small>
+		</div>
+	</form>
+
+	<div class="border-top pt-3">
+		<small class="text-muted">
+			New user? <a class="ml-2" href="{% url 'register' %}">Register here!</a>
+		</small>
+	</div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>You're receiving this email because you created account at {{ hostname }}.</p>
+
+<p>Please click below link to activate your account. If clicking url doesn't work, paste below url in browser.</p>
+
+<p>{{ hostname }}{% url 'account_activation' uidb64=uid token=token %}</p>
+
+<p>Your username, in case you’ve forgotten: <b>{{ username }}</b></p>
+
+<p>Thanks for using our site!</p>
+
+<p>The {{ hostname.domain }} team</p>
+
+
+</body>
+</html>

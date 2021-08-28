@@ -1,0 +1,19 @@
+{% extends "daytoday/base.html" %}
+{% load static %}
+{% block content %}
+
+    {% for bookmark in bookmarks %}
+    <div style="text-align: center;" class="blog-section mb-3">
+        <b><a href="{% url 'view_specific_content' bookmark.date %}" style="color: #3b3b3b; font-size:20px">{{ bookmark.date }}</a></b>
+        <hr>
+        <div class="blog-content text-muted">
+			<p>{{ bookmark.content | safe | truncatewords:"20" }}</p>
+		</div>
+        <div align="left" >
+            <a href="{% url 'view_specific_content' bookmark.date %}">see more..</a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+{% endblock content %}
