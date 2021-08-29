@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxLengthValidator
+from django_cryptography.fields import encrypt
 
 User._meta.get_field('email')._unique = True     # adding Unique constrain to email in User model
 
@@ -11,7 +12,7 @@ User._meta.get_field('email')._unique = True     # adding Unique constrain to em
 # Create your models here.
 class Daily(models.Model):
     date = models.DateField(null=False, default=timezone.now().date())
-    content = RichTextField(null=False, validators=[MaxLengthValidator(30000)])
+    content = encrypt(RichTextField(null=False, validators=[MaxLengthValidator(30000)]))
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
