@@ -53,7 +53,7 @@ def new_content(request):
                 instance = form.save(commit=False)
                 instance.user = request.user
                 instance.save()
-                messages.success(request, f'Well done {request.user}, Good night!')
+                messages.success(request, f'Well done {request.user}!')
                 return redirect('view_specific_content', date=request.POST.get('date'))
         else:
             form = NewContentForm()
@@ -65,7 +65,7 @@ def new_content(request):
 
 @login_required()
 def edit_content(request, date):
-    content = get_object_or_404(Daily, date=date)
+    content = get_object_or_404(Daily, date=date, user=request.user)
 
     if request.method == 'POST':
 
@@ -86,7 +86,7 @@ def edit_content(request, date):
 
 @login_required()
 def delete_content(request, date):
-    content = get_object_or_404(Daily, date=date)
+    content = get_object_or_404(Daily, date=date, user=request.user)
     content.delete()
     messages.success(request, f'Content deleted successfully!')
 
