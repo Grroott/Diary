@@ -14,7 +14,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
-
+from datetime import datetime
 
 # Create your views here.
 @login_required()
@@ -35,7 +35,10 @@ def home(request):
 def view_specific_content(request, date):
     qs = Daily.objects.filter(date=date, user=request.user)
     if not qs:
-        return render(request, 'daytoday/dairy_not_written.html')
+        context = {
+            'date': date
+        }
+        return render(request, 'daytoday/dairy_not_written.html', context=context)
     else:
         context = {
             'posts': qs[0]  # get first index data
@@ -56,7 +59,11 @@ def new_content(request):
                 messages.success(request, f'Well done {request.user}!')
                 return redirect('view_specific_content', date=request.POST.get('date'))
         else:
+            # get a date from front end, if not, use current date
+            date = request.GET.get('selected_date', timezone.now().date().strftime('%Y-%m-%d'))
+            date_fmt = datetime.strptime(date, '%Y-%m-%d').strftime('%Y-%m-%d')
             form = NewContentForm()
+            form.fields['date'].widget.attrs['value'] = date_fmt
         return render(request, 'daytoday/new_content.html', {'form': form})
     else:
         messages.warning(request, f'You already written dairy for this date!')

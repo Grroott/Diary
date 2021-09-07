@@ -2,8 +2,12 @@
 {% load static %}
 {% block content %}
 
-  	<div style="text-align: center;" class="blog-section mb-3">
-		<h5>No record found!! <a href="{% url 'new_content' %}" style="color: #5271c4">Want to write one?</a></h5>
+	<div style="text-align: center;" class="blog-section mb-3">
+		<form action="{% url 'new_content' %}" method="GET" >
+			<h5>No record found for {{ date }}!</h5>
+			<input type='hidden' value="{{ date }}" name='selected_date'>
+			<input type='submit'  class="btn btn-success" value="Write">
+		</form>
 	</div>
 
 {% endblock content %}

@@ -38,20 +38,6 @@ body {
 	margin-top: 1rem;
 }
 
-.footer {
-  margin-top-auto;
-}
-
-.stuck {
-  position: fixed;
-  background-color: #eee;
-  overflow-y: scroll;
-}
-
-.field-icon {
-  float: right;
-  margin-left: -25px;
-  margin-top: -25px;
-  position: relative;
-  z-index: 2;
+.calendar-position {
+    margin-top: 5rem;
 }

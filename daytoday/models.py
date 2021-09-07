@@ -11,7 +11,7 @@ User._meta.get_field('email')._unique = True     # adding Unique constrain to em
 
 # Create your models here.
 class Daily(models.Model):
-    date = models.DateField(null=False, default=timezone.now().date())
+    date = models.DateField(null=False)
     content = encrypt(RichTextField(null=False, validators=[MaxLengthValidator(30000)]))
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
