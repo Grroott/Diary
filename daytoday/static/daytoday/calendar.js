@@ -42,14 +42,16 @@
             e?headDay[0].innerHTML = e : headDay[0].innerHTML = day;
             headMonth[0].innerHTML = monthTag[month] +" - " + year;
 
-            document.getElementById('selected_date').value = year + "-" + month + "-" + headDay[0].innerHTML
+            var custom_month = +month + +1
+
+            document.getElementById('selected_date').value = year + "-" + custom_month + "-" + headDay[0].innerHTML
      };
     
     Calendar.prototype.drawDays = function() {
         var startDay = new Date(year, month, 1).getDay(),
 
             nDays = new Date(year, month + 1, 0).getDate(),
-    
+
             n = startDay;
 
         for(var k = 0; k <42; k++) {
@@ -59,15 +61,15 @@
         }
 
         for(var i  = 1; i <= nDays ; i++) {
-            days[n].innerHTML = i; 
+            days[n].innerHTML = i;
             n++;
         }
-        
+
         for(var j = 0; j < 42; j++) {
             if(days[j].innerHTML === ""){
-                
+
                 days[j].id = "disabled";
-                
+
             }else if(j === day + startDay - 1){
                 if((this.options && (month === setDate.getMonth()) && (year === setDate.getFullYear())) || (!this.options && (month === today.getMonth())&&(year===today.getFullYear()))){
                     this.drawHeader(day);
@@ -82,7 +84,7 @@
             }
         }
     };
-    
+
     Calendar.prototype.clickDay = function(o) {
         var selected = document.getElementsByClassName("selected"),
             len = selected.length;
@@ -93,31 +95,31 @@
         selectedDay = new Date(year, month, o.innerHTML);
         this.drawHeader(o.innerHTML);
         this.setCookie('selected_day', 1);
-        
+
     };
-    
+
     Calendar.prototype.preMonth = function() {
-        if(month < 1){ 
+        if(month < 1){
             month = 11;
-            year = year - 1; 
+            year = year - 1;
         }else{
             month = month - 1;
         }
         this.drawHeader(1);
         this.drawDays();
     };
-    
+
     Calendar.prototype.nextMonth = function() {
         if(month >= 11){
             month = 0;
-            year =  year + 1; 
+            year =  year + 1;
         }else{
             month = month + 1;
         }
         this.drawHeader(1);
         this.drawDays();
     };
-    
+
     Calendar.prototype.getOptions = function() {
         if(this.options){
             var sets = this.options.split('-');
@@ -127,7 +129,7 @@
                 month = setDate.getMonth();
         }
     };
-    
+
      Calendar.prototype.reset = function() {
          month = today.getMonth();
          year = today.getFullYear();
