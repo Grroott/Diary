@@ -138,8 +138,25 @@ def feedback(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            messages.success(request, f'Thank you for sharing your feedback!')
-            return redirect('home')
+
+            # send an email to admin whenever new feedback is received.
+            feedback_subject = form.cleaned_data.get('subject')
+            feedback_content = form.cleaned_data.get('your_feedback')
+            feedback_user = request.user
+
+            try:
+                email_body = render_to_string('daytoday/email_feedback.html',
+                                              {'feedback_subject': feedback_subject, 'feedback_content': feedback_content,
+                                               'feedback_user': feedback_user})
+                send_mail("Personal-Chronicle :: New feedback received!!", email_body, settings.EMAIL_HOST_USER,
+                          [settings.EMAIL_HOST_USER], fail_silently=False, html_message=email_body)
+
+            except Exception as exe:
+                print(exe)
+
+            finally:
+                messages.success(request, f'Thank you for sharing your feedback!')
+                return redirect('home')
     else:
         form = FeedbackForm()
     return render(request, 'daytoday/feedback.html', {'form': form})
