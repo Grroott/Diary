@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 ROOT_URLCONF = 'Diary.urls'
 
@@ -164,6 +164,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if os.environ.get('ENVIRONMENT') != 'github':
+    SECURE_SSL_REDIRECT = True
     import django_heroku
     django_heroku.settings(locals())
 
