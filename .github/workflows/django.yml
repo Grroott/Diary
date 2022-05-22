@@ -12,6 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: some-test-key-not-good-for-prod
+      MY_POSTGRES_USER: someuser
+      MY_POSTGRES_PASSWORD: somepassword
+      MY_POSTGRES_DB: Diary
+    services:
+      postgres_main:
+        image: postgres:12
+        env:
+          POSTGRES_USER: ${{ env.MY_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.MY_POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
     strategy:
       max-parallel: 4
       matrix:
@@ -28,5 +45,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+          DEBUG: "0"
+          DJANGO_SECRET_KEY: ${{ env.ECRET_KEY }}
+          DB_USERNAME: ${{ env.MY_POSTGRES_USER }}
+          DB_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
+          DB_HOST: localhost
+          DB_DATABASE: ${{ env.MY_POSTGRES_DB }}
+          DB_PORT: 5432
       run: |
         python manage.py test
