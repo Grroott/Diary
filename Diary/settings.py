@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
 from platform import node
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -174,5 +173,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+if os.environ.get('ENVIRONMENT') != 'github':
+    import django_heroku
+    django_heroku.settings(locals())
 
