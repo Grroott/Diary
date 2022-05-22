@@ -11,8 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      DJANGO_SECRET_KEY: some-test-key-not-good-for-prod
-      PYTHON_VERSION: 3.8
+      SECRET_KEY: some-test-key-not-good-for-prod
     strategy:
       max-parallel: 4
       matrix:
