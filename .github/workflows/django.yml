@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: some-test-key-not-good-for-prod
+      ENVIRONMENT: github
       MY_POSTGRES_USER: someuser
       MY_POSTGRES_PASSWORD: somepassword
       MY_POSTGRES_DB: Diary
